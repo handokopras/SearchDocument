@@ -26,13 +26,29 @@ import org.apache.lucene.util.Version;
 
 /**
  *
- * @author admin
+ *
+ *
+ * @author puspaningtyas
+ *
  */
 public class Document implements Comparable<Document> {
 
     private int id;
     private String content; // atribut content yang dianalisis
     private String realContent; // atribut content asli
+    private String juduldoc ;
+
+     public Document(int id, String content) {
+        this.id = id;
+        this.content = content;
+        this.realContent = content;
+    }
+    
+    public Document(int id, String content, String juduldoc) {
+        this.id = id;
+        this.content = content;
+        this.juduldoc = juduldoc;
+    }
 
     public Document() {
     }
@@ -46,42 +62,49 @@ public class Document implements Comparable<Document> {
         this.realContent = content;
     }
 
-    public Document(int id, String content) {
-        this.id = id;
-        this.content = content;
-        this.realContent = content;
-    }
-
-    Document(int i, String AllContent, String replace) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
+     *
      * @return the content
+     *
      */
     public String getContent() {
         return content;
     }
 
     /**
+     *
      * @param content the content to set
+     *
      */
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
+     *
      * @return the id
+     *
      */
     public int getId() {
         return id;
     }
 
     /**
+     *
      * @param id the id to set
+     *
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getJuduldoc() {
+        return juduldoc;
+    }
+
+    public void setJuduldoc(String juduldoc) {
+        this.juduldoc = juduldoc;
     }
 
     public String[] getListofTerm() {
@@ -129,19 +152,26 @@ public class Document implements Comparable<Document> {
                     // atau get(indekshasilcari.setNumberOfTerm(tempNumber)
                     result.get(indexCari).setNumberOfTerm(tempNumber);
                 }
+
             }
+
         }
+
         return result;
+
     }
 
     @Override
+
     public int compareTo(Document doc) {
         return id - doc.getId();
     }
 
     /**
-     * Fungsi untuk membaca sebuah file *.txt dan hasil baca dimasukkan ke
+     *
+     * Fungsi untuk membaca sebuah file *.txt dan * hasil baca dimasukkan ke
      * atribut content
+     *
      */
     public void readFile(int idDoc, File file) {
         // simpan idDoc
@@ -150,12 +180,15 @@ public class Document implements Comparable<Document> {
     }
 
     @Override
+
     public String toString() {
         return "Document{" + "id=" + id + ", content=" + content + ", realContent=" + realContent + '}';
     }
 
     /**
+     *
      * Fungsi untuk menghilangkan kata stop word
+     *
      */
     public void removeStopWords() {
         // asumsi content sudah ada
@@ -175,19 +208,26 @@ public class Document implements Comparable<Document> {
         StringBuilder sb = new StringBuilder();
         CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
         try {
+
             tokenStream.reset();
             while (tokenStream.incrementToken()) {
                 String term = charTermAttribute.toString();
                 sb.append(term + " ");
             }
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
+
         }
+
         content = sb.toString();
+
     }
 
     /**
+     *
      * Fungsi untuk menghilangkan stop word dan stemming
+     *
      */
     public void stemming() {
         String text = content;
@@ -210,35 +250,51 @@ public class Document implements Comparable<Document> {
                 String term = charTermAttribute.toString();
                 sb.append(term + " ");
             }
+
         } catch (Exception ex) {
             System.out.println("Exception: " + ex);
         }
         content = sb.toString();
+
     }
 
     /**
+     *
      * @return the realContent
+     *
      */
     public String getRealContent() {
+
         return realContent;
+
     }
 
     /**
+     *
      * @param realContent the realContent to set
+     *
      */
     public void setRealContent(String realContent) {
+
         this.realContent = realContent;
+
     }
 
-    public void IndonesiaStemming() {
-        String text = content;
-        Version matchVersion = Version.LUCENE_7_7_0;
+
+        
+    public void IndonesiaStemming(){
+        Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
         Analyzer analyzer = new IndonesianAnalyzer();
         analyzer.setVersion(matchVersion);
-
-        TokenStream tokenStream = analyzer.tokenStream("myField", new StringReader(text));
-
-        tokenStream = new IndonesianStemFilter(tokenStream);
+        // ambil stopwords
+        CharArraySet stopWords = IndonesianAnalyzer.getDefaultStopSet();
+        // buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(realContent.trim()));
+        // buang stop word
+        tokenStream = new StopFilter(tokenStream, stopWords);
+        // buat string baru tanpa stopword
         StringBuilder sb = new StringBuilder();
         CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
         try {
@@ -247,10 +303,11 @@ public class Document implements Comparable<Document> {
                 String term = charTermAttribute.toString();
                 sb.append(term + " ");
             }
-        } catch (IOException ex) {
-            System.out.println("Exception : " + ex);
+        } catch (Exception ex) {
+
+            System.out.println("Exception: " + ex);
         }
         content = sb.toString();
-    }
 
+    }
 }
