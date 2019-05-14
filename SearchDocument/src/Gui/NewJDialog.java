@@ -5,17 +5,8 @@
  */
 package Gui;
 
-import Model.*;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Document;
 import model.InvertedIndex;
@@ -136,7 +127,7 @@ public class NewJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void New_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_New_DocumentActionPerformed
-        new New_Document().setVisible(true);
+    new New_Document().setVisible(true);
     }//GEN-LAST:event_New_DocumentActionPerformed
 
     private void View_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_DocumentActionPerformed
