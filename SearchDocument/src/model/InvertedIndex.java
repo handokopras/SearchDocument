@@ -5,7 +5,10 @@
  */
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Consumer;
+
 
 /**
  *
@@ -552,7 +556,35 @@ public class InvertedIndex {
     //fungsi untuk membuat list dokument dari sebuah directory
     //asumsikan isi file cukup disimpan dalam sebuah obyek string
     public void readDirectory(File directory) {
-        
-
+        File[] fileNames = directory.listFiles();
+        int i = 1;
+        for (File file : fileNames) {
+            // if directory call the same method again
+            if (file.isDirectory()) {
+                readDirectory(file);
+            } else {
+                try {
+                    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                        String strLine;
+                        String AllContent = "";
+                        // Read lines from the file, returns null when end of stream 
+                        // is reached                    
+                        while ((strLine = br.readLine()) != null) {
+                            AllContent += strLine + " \n";
+                        }
+                        Document doc = new Document(i, AllContent, file.getName().replace(".txt", ""));
+                        listOfDocument.add(doc);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            i++;
+        }
+        makeDictionaryWithTermNumber();
     }
+
+    
+   
+    
 }

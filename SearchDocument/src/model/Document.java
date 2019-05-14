@@ -52,6 +52,10 @@ public class Document implements Comparable<Document> {
         this.realContent = content;
     }
 
+    Document(int i, String AllContent, String replace) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * @return the content
      */

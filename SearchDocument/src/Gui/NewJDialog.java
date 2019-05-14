@@ -5,12 +5,29 @@
  */
 package Gui;
 
+import Model.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Document;
+import model.InvertedIndex;
+import model.SearchingResult;
+
 /**
  *
  * @author HP
  */
 public class NewJDialog extends javax.swing.JDialog {
-
+    ArrayList<Document> document = new ArrayList<>();
+    InvertedIndex index = new InvertedIndex();
     /**
      * Creates new form NewJDialog
      */
@@ -29,8 +46,10 @@ public class NewJDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        Search = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabel = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         New_Document = new javax.swing.JMenuItem();
@@ -41,14 +60,25 @@ public class NewJDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Search");
 
-        jTextField1.setText("jTextField1");
-
         jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Content"
+            }
+        ));
+        jScrollPane1.setViewportView(tabel);
 
         jMenu1.setText("File");
 
@@ -80,10 +110,14 @@ public class NewJDialog extends javax.swing.JDialog {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,12 +126,14 @@ public class NewJDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
@@ -105,6 +141,18 @@ public class NewJDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        index.makeDictionaryWithTermNumber();
+        ArrayList<SearchingResult> cari = index.searchCosineSimilarity(Search.getText());
+        Search.setText("");
+        DefaultTableModel model = (DefaultTableModel) tabel.getModel();
+        int baris = model.getRowCount();
+        for (int i = 0; i < baris; i++) {
+            model.removeRow(0);
+        }
+        for (int i = 0; i < cari.size(); i++) {
+            Object[] item = {cari.get(i).getDocument().getId(), cari.get(i).getDocument().getContent(), cari.get(i).getSimilarity()};
+            model.addRow(item);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void New_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_New_DocumentActionPerformed
@@ -112,7 +160,7 @@ public class NewJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_New_DocumentActionPerformed
 
     private void View_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_DocumentActionPerformed
-new View_Document().setVisible(true);
+    new View_Document().setVisible(true);
     }//GEN-LAST:event_View_DocumentActionPerformed
 
     /**
@@ -159,11 +207,13 @@ new View_Document().setVisible(true);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem New_Document;
+    private javax.swing.JTextField Search;
     private javax.swing.JMenuItem View_Document;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }
