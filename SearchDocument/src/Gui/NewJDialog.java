@@ -48,8 +48,6 @@ public class NewJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         Search = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabel = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         New_Document = new javax.swing.JMenuItem();
@@ -66,19 +64,6 @@ public class NewJDialog extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        tabel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Content"
-            }
-        ));
-        jScrollPane1.setViewportView(tabel);
 
         jMenu1.setText("File");
 
@@ -114,10 +99,6 @@ public class NewJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,20 +112,19 @@ public class NewJDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(49, 49, 49)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+      new SearchResult().setVisible(true);
         index.makeDictionaryWithTermNumber();
-        ArrayList<SearchingResult> cari = index.searchCosineSimilarity(Search.getText());
-        Search.setText("");
-        DefaultTableModel model = (DefaultTableModel) tabel.getModel();
+        ArrayList<SearchingResult> cari = index.searchCosineSimilarity(jButton1.getText());
+        jButton1.setText("");
+        SearchResult SR = new SearchResult();
+        DefaultTableModel model = (DefaultTableModel) SR.table1.getModel();
         int baris = model.getRowCount();
         for (int i = 0; i < baris; i++) {
             model.removeRow(0);
@@ -213,7 +193,5 @@ public class NewJDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }
