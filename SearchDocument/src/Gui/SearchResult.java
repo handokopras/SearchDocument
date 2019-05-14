@@ -7,7 +7,7 @@ package Gui;
 
 /**
  *
- * @author USER
+ * @author HP
  */
 public class SearchResult extends javax.swing.JFrame {
 
