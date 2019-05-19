@@ -9,20 +9,20 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="New_Document">
+            <MenuItem class="javax.swing.JMenuItem" name="New_D">
               <Properties>
                 <Property name="text" type="java.lang.String" value="New Document"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="New_DocumentActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="New_DActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="View_Document">
+            <MenuItem class="javax.swing.JMenuItem" name="View_D">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View Document"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="View_DocumentActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="View_DActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

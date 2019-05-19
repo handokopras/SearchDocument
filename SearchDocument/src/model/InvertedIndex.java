@@ -594,8 +594,10 @@ public class InvertedIndex {
      */
     public void readDirectory(File directory) {
         File[] fileNames = directory.listFiles();
+        
         int i = 1;
-        for (File file : fileNames) {
+        for (File file : fileNames) {//
+       
             // if directory call the same method again
             if (file.isDirectory()) {
                 readDirectory(file);

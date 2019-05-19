@@ -139,7 +139,7 @@ public class View_Document extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        fileChooser.setDialogTitle("Pilih hanya Directory");
+                fileChooser.setDialogTitle("Pilih hanya Directory");
         fileChooser.setCurrentDirectory(new java.io.File("."));
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);

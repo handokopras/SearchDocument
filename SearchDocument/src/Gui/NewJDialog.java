@@ -41,8 +41,8 @@ public class NewJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        New_Document = new javax.swing.JMenuItem();
-        View_Document = new javax.swing.JMenuItem();
+        New_D = new javax.swing.JMenuItem();
+        View_D = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -58,21 +58,21 @@ public class NewJDialog extends javax.swing.JDialog {
 
         jMenu1.setText("File");
 
-        New_Document.setText("New Document");
-        New_Document.addActionListener(new java.awt.event.ActionListener() {
+        New_D.setText("New Document");
+        New_D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                New_DocumentActionPerformed(evt);
+                New_DActionPerformed(evt);
             }
         });
-        jMenu1.add(New_Document);
+        jMenu1.add(New_D);
 
-        View_Document.setText("View Document");
-        View_Document.addActionListener(new java.awt.event.ActionListener() {
+        View_D.setText("View Document");
+        View_D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                View_DocumentActionPerformed(evt);
+                View_DActionPerformed(evt);
             }
         });
-        jMenu1.add(View_Document);
+        jMenu1.add(View_D);
 
         jMenuBar1.add(jMenu1);
 
@@ -110,11 +110,11 @@ public class NewJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      new SearchResult().setVisible(true);
+      new SearchResultGui().setVisible(true);
         index.makeDictionaryWithTermNumber();
         ArrayList<SearchingResult> cari = index.searchCosineSimilarity(jButton1.getText());
         jButton1.setText("");
-        SearchResult SR = new SearchResult();
+        SearchResultGui SR = new SearchResultGui();
         DefaultTableModel model = (DefaultTableModel) SR.table1.getModel();
         int baris = model.getRowCount();
         for (int i = 0; i < baris; i++) {
@@ -126,13 +126,16 @@ public class NewJDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void New_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_New_DocumentActionPerformed
-    new New_Document().setVisible(true);
-    }//GEN-LAST:event_New_DocumentActionPerformed
+    private void New_DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_New_DActionPerformed
 
-    private void View_DocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_DocumentActionPerformed
-    new View_Document().setVisible(true);
-    }//GEN-LAST:event_View_DocumentActionPerformed
+        new New_Document().setVisible(true);
+    }//GEN-LAST:event_New_DActionPerformed
+
+    private void View_DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_View_DActionPerformed
+//    new View_Document().setVisible(true);
+View_Document view = new View_Document();
+view.setVisible(true);
+    }//GEN-LAST:event_View_DActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,9 +180,9 @@ public class NewJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem New_Document;
+    private javax.swing.JMenuItem New_D;
     private javax.swing.JTextField Search;
-    private javax.swing.JMenuItem View_Document;
+    private javax.swing.JMenuItem View_D;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
